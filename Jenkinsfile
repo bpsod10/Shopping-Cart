@@ -83,5 +83,14 @@ pipeline {
         }
 
 
+        stage('k8s deploy') {
+            steps {
+                withKubeConfig(caCertificate: '', clusterName: 'kubernetes', contextName: '', credentialsId: 'k8s-secret-token', namespace: '', restrictKubeConfigAccess: false, serverUrl: 'https://44.211.181.218:6443') {
+                    sh 'kubectl apply -f deploymentservice.yml'
+                    sh 'kubectl get svc'
+                }
+            }
+        }
+
     }
 }
